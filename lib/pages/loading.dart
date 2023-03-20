@@ -10,13 +10,19 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void getData() async {
-    // 打 API
-    Response res =
-        await get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
-    // decode JSON
-    Map data = jsonDecode(res.body);
-    print(data['id']);
+  void getTime() async {
+    Response response = await get(
+        Uri.parse('http://worldtimeapi.org/api/timezone/Asia/Taipei'));
+    Map data = jsonDecode(response.body);
+    String datetime = data['utc_datetime'];
+    String offset = data['utc_offset'].substring(1, 3);
+
+    // create DateTime object
+    DateTime now = DateTime.parse(datetime);
+    now = now.add(Duration(hours: int.parse(offset)));
+
+    print(datetime);
+    print(now);
   }
 
   @override
@@ -26,7 +32,7 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    getTime();
     return Scaffold(
       body: Text('loading'),
     );
