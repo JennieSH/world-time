@@ -6,7 +6,7 @@ import 'package:world_time/pages/loading.dart';
 void main() {
   runApp(MaterialApp(
     // home: Home(), // 與 '/'(Loading) conflict，改用 initialRoute
-    initialRoute: '/home', // overwrite 初始畫面
+    initialRoute: '/', // overwrite 初始畫面
     routes: {
       '/': (context) => Loading(),
       '/home': (context) => Home(),
