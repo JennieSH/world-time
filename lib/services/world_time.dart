@@ -7,6 +7,7 @@ class WorldTime {
   late String flag; // url for an asset flag icon
   late String url; // location url for endpoint
   late String time; // the time in that location
+  late bool isDaytime;
 
   WorldTime({required this.location, required this.flag, required this.url});
 
@@ -27,6 +28,7 @@ class WorldTime {
 
       // set the time property
       time = DateFormat.jm().format(now);
+      isDaytime = now.hour > 6 && now.hour < 20 ? true : false;
     } catch (e) {
       time = 'caught error: $e';
     }
