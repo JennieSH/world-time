@@ -13,7 +13,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // get route data
-    data = ModalRoute.of(context)?.settings.arguments as Map;
+    data =
+        data.isEmpty ? ModalRoute.of(context)?.settings.arguments as Map : data;
 
     String bgImage = data['isDaytime'] ? 'day.png' : 'night.png';
     Color bgColor =
@@ -31,9 +32,15 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               TextButton.icon(
-                onPressed: () {
+                onPressed: () async {
                   // 前往 /location 頁面
-                  Navigator.pushNamed(context, '/location');
+                  // Navigator.pushNamed 會 return 前頁面 pop 的 result
+                  dynamic result =
+                      await Navigator.pushNamed(context, '/location');
+
+                  setState(() {
+                    data = result;
+                  });
                 },
                 icon: Icon(
                   Icons.edit_location,
